@@ -1,0 +1,43 @@
+version: "3.11"
+
+services:
+
+    api:
+      build:
+        context: .
+      env_file:
+        - .env
+      container_name: api
+      restart: on-failure
+      expose:
+        - 8000
+      ports:
+        - 8000:8000
+      command: [ "/docker/api.sh" ]
+      depends_on:
+        postgres:
+          condition: service_healthy
+
+    postgres:
+      image: postgres:15.1-alpine
+      container_name: db
+      restart: always
+      command: -p 5432
+      expose:
+        - 5432
+      ports:
+        - 5432:5432
+      environment:
+        - POSTGRES_USER=${DB_USER:?err}
+        - POSTGRES_PASSWORD=${DB_PASS:?err}
+        - POSTGRES_DB=${DB_NAME:?err}
+      volumes:
+        - postgres_db:/var/lib/postgresql/data
+      healthcheck:
+        test: [ "CMD-SHELL", "pg_isready", "-U", "postgres" ]
+        interval: 5s
+        timeout: 5s
+        retries: 5
+
+volumes:
+  postgres_db:
