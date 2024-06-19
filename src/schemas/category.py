@@ -8,3 +8,11 @@ class CategorySchema(BaseModel):
 
     id: int
     name: str
+
+
+class ResponseSchema(BaseModel):
+    """
+    Cхема для возврата сообщения с ответом
+    """
+
+    message: str
