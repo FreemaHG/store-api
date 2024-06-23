@@ -15,5 +15,6 @@ class Category(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True, index=True)
     name: Mapped[str] = mapped_column(String(50))
+    image: Mapped[str] = mapped_column(String(300), nullable=True)
 
     products: Mapped[List['Product']] = relationship('Product', backref='category', cascade='all, delete-orphan')

@@ -8,6 +8,7 @@ class CategorySchema(BaseModel):
 
     id: int
     name: str
+    image: str
 
 
 class ResponseSchema(BaseModel):
