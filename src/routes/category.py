@@ -20,7 +20,7 @@ async def get_categories(
     session: AsyncSession = Depends(get_async_session),
 ):
     """
-    Вывод категорий
+    Возврат категорий
     """
     dishes_list = await CategoryService.get_categories(session=session)
 

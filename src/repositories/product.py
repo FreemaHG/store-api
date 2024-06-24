@@ -20,10 +20,14 @@ class ProductRepository:
         :param session: объект асинхронной сессии
         :return: объект товара | None
         """
-        query = select(Product).where(Product.id == product_id)
+        query = select(Product)\
+            .options(joinedload(Product.images))\
+            .options(joinedload(Product.category))\
+            .where(Product.id == product_id)
+
         product = await session.execute(query)
 
-        return product.scalar_one_or_none()
+        return product.unique().scalar_one_or_none()
 
     @classmethod
     async def get_list(cls, session: AsyncSession) -> List[Product]:
