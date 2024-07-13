@@ -2,12 +2,12 @@ version: "3.11"
 
 services:
 
-    api:
+    backend:
       build:
         context: .
       env_file:
         - .env
-      container_name: api
+      container_name: backend
       restart: on-failure
       expose:
         - 8000
@@ -20,7 +20,7 @@ services:
 
     postgres:
       image: postgres:15.1-alpine
-      container_name: db
+      container_name: postgres
       restart: always
       command: -p 5432
       expose:
