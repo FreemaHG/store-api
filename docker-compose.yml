@@ -1,4 +1,4 @@
-version: "3.11"
+version: "3"
 
 services:
 
@@ -31,11 +31,75 @@ services:
         - 5432:5432
       volumes:
         - postgres_db:/var/lib/postgresql/data
+        # TODO Переименовать позже!
+#        - postgres-data:/var/lib/postgresql/data
       healthcheck:
         test: [ "CMD-SHELL", "pg_isready", "-U", "postgres" ]
         interval: 5s
         timeout: 5s
         retries: 5
 
+    # Веб-сервер fief для аутентификации
+    fief-server:
+      image: ghcr.io/fief-dev/fief:latest
+      command: fief run-server
+      env_file:
+        - .env.prod
+      expose:
+        - 8001
+      ports:
+        - 8001:8001
+      depends_on:
+        - postgres
+        - redis
+      labels:
+        - "traefik.enable=true"
+        # Set your domain name here
+#        - "traefik.http.routers.fief.rule=Host(`fief.mydomain.com`)"
+#        - "traefik.http.routers.fief.entrypoints=websecure"
+#        - "traefik.http.routers.fief.tls.certresolver=myresolver"
+
+    # Воркер fief для корреткной работы
+    fief-worker:
+      image: ghcr.io/fief-dev/fief:latest
+      command: fief run-worker -p 1 -t 1
+      env_file:
+        - .env.prod
+      depends_on:
+        - postgres
+        - redis
+
+    # Для очереди сообщений для fief
+    redis:
+      image: redis:alpine
+      command: redis-server --save 60 1 --loglevel warning
+      volumes:
+        - redis-data:/data
+
+    # Для ssl-соединений для fief
+    traefik:
+      image: "traefik:v2.11"
+      container_name: "traefik"
+      command:
+        # Uncomment the lines below to debug and try with a self-signed certificate
+        # - "--log.level=DEBUG"
+        # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+        - "--api.insecure=true"
+        - "--providers.docker=true"
+        - "--providers.docker.exposedbydefault=false"
+        - "--entrypoints.websecure.address=:443"
+        - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+        # Set your email address here
+        - "--certificatesresolvers.myresolver.acme.email=${FIEF_MAIN_USER_EMAIL:?err}"
+        - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      ports:
+        - "443:443"
+        - "8080:8080"
+      volumes:
+        - "letsencrypt-data:/letsencrypt"
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
 volumes:
   postgres_db:
+  redis-data:
+  letsencrypt-data:
