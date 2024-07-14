@@ -6,9 +6,9 @@ from fastapi.security import OAuth2PasswordBearer
 from jwt import InvalidTokenError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.auth.models import User
-from src.auth.repositories import UserRepository
-from src.auth.schemas.token import TokenData
+from src.users.models import User
+from src.users.repositories import UserRepository
+from src.auth.schemas import TokenData
 from src.config import SECRET_KEY, ALGORITHM
 from src.database import get_async_session
 

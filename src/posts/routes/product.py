@@ -1,21 +1,22 @@
 import random
 from http import HTTPStatus
 
-from fastapi import Depends
+from fastapi import Depends, APIRouter
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_async_session
-from src.posts.routes.base import BaseAPIRouter
 from src.posts.schemas.product import ProductSchema
-from src.schemas.response import ResponseSchema
+from src.schemas import ResponseSchema
 from src.posts.services.product import ProductService
 from src.exceptions import CustomApiException
 
 
-router = BaseAPIRouter(tags=['Товары'])
+router = APIRouter(tags=['Товары'])
 
 @router.get(
     '/products/',
+    name="Возврат товаров",
+    description="Возврат всех товаров",
     response_model=list[ProductSchema],
     responses={
         200: {'model': list[ProductSchema]}
@@ -35,6 +36,8 @@ async def get_products(
 
 @router.get(
     '/products/{product_id}/',
+    name="Возврат товара",
+    description="Возврат товара по id",
     response_model=ProductSchema,
     responses={
         200: {'model': ProductSchema},

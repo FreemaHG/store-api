@@ -10,7 +10,7 @@ from src.database import Base, metadata
 from src.posts.models.category import Category
 from src.posts.models.image import Image
 from src.posts.models.product import Product
-from src.auth.models import User
+from src.users.models import User
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
