@@ -3,9 +3,9 @@ from fastapi import APIRouter
 
 class BaseAPIRouter(APIRouter):
     """
-    Базовый URL и с версией API
+    Базовый URL для магазинного функционала
     """
 
     def __init__(self, *args, **kwargs):
-        self.prefix = '/api/v1'
+        self.prefix = '/store'
         super().__init__(*args, **kwargs, prefix=self.prefix)

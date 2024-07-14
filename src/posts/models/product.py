@@ -4,7 +4,7 @@ from sqlalchemy import String, Numeric, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database import Base
-from src.models.image import Image
+from src.posts.models.image import Image
 
 
 class Product(Base):

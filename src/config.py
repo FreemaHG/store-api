@@ -13,3 +13,7 @@ DB_USER = os.environ.get('POSTGRES_USER')
 DB_PASS = os.environ.get('POSTGRES_PASSWORD')
 
 FRONTAGE_URL = os.environ.get('FRONTAGE_URL')
+
+SECRET_KEY = os.environ.get('SECRET_KEY')
+ALGORITHM = os.environ.get('ALGORITHM')
+ACCESS_TOKEN_EXPIRE_MINUTES = os.environ.get('ACCESS_TOKEN_EXPIRE_MINUTES')

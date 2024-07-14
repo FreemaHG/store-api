@@ -3,8 +3,8 @@ from decimal import Decimal
 
 from pydantic import BaseModel, field_validator
 
-from src.schemas.category import CategorySchema
-from src.schemas.image import ImageSchema
+from src.posts.schemas.category import CategorySchema
+from src.posts.schemas.image import ImageSchema
 
 
 class ProductSchema(BaseModel):

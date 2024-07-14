@@ -5,10 +5,10 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_async_session
-from src.models.image import Image
-from src.models.product import Product
-from src.routes.base import BaseAPIRouter
-from src.schemas.category import ResponseSchema
+from src.posts.models.image import Image
+from src.posts.models.product import Product
+from src.posts.routes.base import BaseAPIRouter
+from src.posts.schemas.category import ResponseSchema
 
 
 router = BaseAPIRouter(tags=['Загрузка данных'])

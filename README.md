@@ -8,7 +8,13 @@ uvicorn src.main:app --reload
 docker compose up -d
 ```
 
-## Создание коммита
+## Генерация ключа для подписи токенов JWT
 ```
-cz commit
+openssl rand -hex 32
+
 ```
+
+## Сделать
+- Вынести секретные данные в отдельный файл .secrets
+
+Пароль - secret

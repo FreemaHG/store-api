@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.product import Product
-from src.repositories.product import ProductRepository
+from src.posts.models.product import Product
+from src.posts.repositories.product import ProductRepository
 
 
 class ProductService:

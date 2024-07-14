@@ -3,8 +3,8 @@ from typing import List
 from sqlalchemy import delete, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.models.category import Category
-from src.schemas.category import CategorySchema
+from src.posts.models.category import Category
+from src.posts.schemas.category import CategorySchema
 
 
 class CategoryCRUDRepository:

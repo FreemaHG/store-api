@@ -6,10 +6,10 @@ from src.admin import CategoryAdmin, ProductAdmin
 from src.database import engine
 from src.config import FRONTAGE_URL
 from src.urls import register_routers
-from src.utils.exceptions import CustomApiException, custom_api_exception_handler
+from src.exceptions import CustomApiException, custom_api_exception_handler
 
 
-app = FastAPI(title='store', debug=True)
+app = FastAPI(title='store', root_path="/api/v1", debug=True)
 admin = Admin(app, engine)
 
 # Регистрация роутеров

@@ -5,17 +5,17 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_async_session
-from src.routes.base import BaseAPIRouter
-from src.schemas.product import ProductSchema
+from src.posts.routes.base import BaseAPIRouter
+from src.posts.schemas.product import ProductSchema
 from src.schemas.response import ResponseSchema
-from src.services.product import ProductService
-from src.utils.exceptions import CustomApiException
+from src.posts.services.product import ProductService
+from src.exceptions import CustomApiException
 
 
 router = BaseAPIRouter(tags=['Товары'])
 
 @router.get(
-    '/products',
+    '/products/',
     response_model=list[ProductSchema],
     responses={
         200: {'model': list[ProductSchema]}

@@ -4,7 +4,7 @@ from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.database import Base
-from src.models.product import Product
+from src.posts.models.product import Product
 
 
 class Category(Base):
