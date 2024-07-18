@@ -1,7 +1,7 @@
 import random
 from http import HTTPStatus
 
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_async_session
@@ -9,7 +9,6 @@ from src.posts.schemas.product import ProductSchema
 from src.router import BaseRouter
 from src.schemas import ResponseSchema
 from src.posts.services.product import ProductService
-from src.exceptions import CustomApiException
 
 
 router = BaseRouter(tags=['Товары'])
@@ -55,6 +54,6 @@ async def get_product(
     post = await ProductService.get(product_id=product_id, session=session)
 
     if not post:
-        raise CustomApiException(status_code=HTTPStatus.NOT_FOUND, detail='Товар не найден')
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail='Товар не найден')
 
     return post

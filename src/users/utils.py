@@ -1,20 +1,16 @@
 from typing import Annotated
 
 import jwt
-from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
 from jwt import InvalidTokenError
+from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.auth.config import oauth2_scheme
+from src.auth.schemas.token import TokenData
 from src.users.models import User
 from src.users.repositories import UserRepository
-from src.auth.schemas import TokenData
 from src.config import SECRET_KEY, ALGORITHM
 from src.database import get_async_session
-
-# Указываем URL (/token) для получения токена клиентом (не создаем URL!!!)
-# При использовании данной зависимости автоматически будет проверятся тип токена и сам токен в заголовках запросов
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/token/")
 
 
 async def get_current_user(
@@ -58,6 +54,6 @@ async def get_current_active_user(current_user: Annotated[User, Depends(get_curr
     """
 
     if current_user.is_active is False:
-        raise HTTPException(status_code=400, detail="Пользователь не активен")
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Пользователь не активен")
 
     return current_user

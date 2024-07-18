@@ -3,11 +3,12 @@ from typing import Union, Annotated
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.auth.schemas.auth import UserCreateSchema
 from src.router import BaseRouter
 from src.users.models import User
 from src.database import get_async_session
 from src.schemas import ResponseSchema
-from src.users.schemas import UserOutSchema, UserCreateSchema
+from src.users.schemas import UserOutSchema
 from src.users.services import RegisterUserServices
 from src.users.utils import get_current_active_user
 

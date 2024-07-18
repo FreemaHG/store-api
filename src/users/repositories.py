@@ -1,8 +1,8 @@
 from sqlalchemy import select, insert
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.auth.schemas.auth import UserCreateSchema
 from src.users.models import User
-from src.users.schemas import UserCreateSchema
 
 
 class UserRepository:

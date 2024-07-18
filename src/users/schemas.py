@@ -3,11 +3,17 @@ from typing import Optional
 from pydantic import EmailStr, BaseModel
 
 
-class UserBaseSchema(BaseModel):
+class UsernameSchema(BaseModel):
+    """
+    Базовая схема с логином пользователя
+    """
+    username: str
+
+
+class UserBaseSchema(UsernameSchema):
     """
     Схема с базовыми полями о пользователе
     """
-    username: str
     email: EmailStr
     avatar: Optional[str] = None
 
@@ -17,9 +23,3 @@ class UserOutSchema(UserBaseSchema):
     Схема для вывода данных о пользователе
     """
     id: int
-
-class UserCreateSchema(UserBaseSchema):
-    """
-    Схема для регистрации пользователя
-    """
-    password: str

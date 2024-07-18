@@ -8,7 +8,6 @@ from src.admin.user import Userdmin
 from src.database import engine
 from src.config import FRONTAGE_URL, DEBUG
 from src.urls import register_routers
-from src.exceptions import CustomApiException, custom_api_exception_handler
 
 
 app = FastAPI(title='store', debug=DEBUG)
@@ -21,9 +20,6 @@ register_routers(app)
 admin.add_view(CategoryAdmin)
 admin.add_view(ProductAdmin)
 admin.add_view(Userdmin)
-
-# Регистрация кастомного исключения
-app.add_exception_handler(CustomApiException, custom_api_exception_handler)
 
 # URL, с которых разрешено делать запросы на сервер
 origins = [FRONTAGE_URL]

@@ -4,6 +4,7 @@ import jwt
 
 from src.config import SECRET_KEY, ALGORITHM
 
+
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     """
     Генерация токена аутентификации

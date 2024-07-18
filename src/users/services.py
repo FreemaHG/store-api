@@ -1,13 +1,13 @@
 from http import HTTPStatus
 
+from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import IntegrityError
 
-from src.exceptions import CustomApiException
+from src.auth.schemas.auth import UserCreateSchema
 from src.users.models import User
 from src.users.repositories import UserRepository
 from src.auth.utils.password import get_password_hash
-from src.users.schemas import UserCreateSchema
 
 
 class RegisterUserServices:
@@ -32,7 +32,7 @@ class RegisterUserServices:
                 session=session
             )
         except IntegrityError:
-            raise CustomApiException(
+            raise HTTPException(
                 status_code=HTTPStatus.BAD_REQUEST,
                 detail='Пользователь с таким username уже зарегистрирован'
             )
