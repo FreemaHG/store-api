@@ -1,7 +1,7 @@
 from datetime import timedelta
 from typing import Annotated
 
-from fastapi import Depends, HTTPException, APIRouter
+from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
@@ -11,9 +11,10 @@ from src.auth.services.register_user import authenticate_user
 from src.auth.utils.token import create_access_token
 from src.config import ACCESS_TOKEN_EXPIRE_MINUTES
 from src.database import get_async_session
+from src.router import BaseRouter
 
 
-router = APIRouter(tags=['Авторизация'])
+router = BaseRouter(tags=['Авторизация'])
 
 @router.post(
     "/auth/token/",

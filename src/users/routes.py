@@ -1,8 +1,9 @@
 from typing import Union, Annotated
 
-from fastapi import Depends, APIRouter
+from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from src.router import BaseRouter
 from src.users.models import User
 from src.database import get_async_session
 from src.schemas import ResponseSchema
@@ -11,7 +12,7 @@ from src.users.services import RegisterUserServices
 from src.users.utils import get_current_active_user
 
 
-router = APIRouter(tags=['Пользователи'])
+router = BaseRouter(tags=['Пользователи'])
 
 @router.post(
     "/users/",

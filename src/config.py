@@ -6,6 +6,8 @@ load_dotenv()
 
 PATH = os.path.dirname(os.path.realpath(__file__))
 
+DEBUG = os.environ.get('DEBUG', False)
+
 DB_HOST = os.environ.get('POSTGRES_HOST')
 DB_PORT = os.environ.get('POSTGRES_PORT')
 DB_NAME = os.environ.get('POSTGRES_DB')

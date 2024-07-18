@@ -1,5 +1,9 @@
-from sqlalchemy.ext.asyncio import AsyncSession
+from http import HTTPStatus
 
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import IntegrityError
+
+from src.exceptions import CustomApiException
 from src.users.models import User
 from src.users.repositories import UserRepository
 from src.auth.utils.password import get_password_hash
@@ -21,10 +25,16 @@ class RegisterUserServices:
         """
         hash_password = get_password_hash(password=user_data.password)
 
-        user = await UserRepository.create(
-            new_user=user_data,
-            hash_password=hash_password,
-            session=session
-        )
+        try:
+            user = await UserRepository.create(
+                new_user=user_data,
+                hash_password=hash_password,
+                session=session
+            )
+        except IntegrityError:
+            raise CustomApiException(
+                status_code=HTTPStatus.BAD_REQUEST,
+                detail='Пользователь с таким username уже зарегистрирован'
+            )
 
         return user
