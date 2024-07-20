@@ -8,7 +8,7 @@ from src.database import get_async_session
 from src.router import BaseRouter
 from src.schemas import ResponseSchema
 from src.users.schemas import UserOutSchema
-from src.auth.services.register import RegisterUserServices
+from src.auth.services import AuthService
 
 
 router = BaseRouter(tags=['Регистрация и авторизация'])
@@ -31,6 +31,6 @@ async def register_user(
     """
     Регистрация пользователя
     """
-    user = await RegisterUserServices.register(user_data=user_data, session=session)
+    user = await AuthService.register(user_data=user_data, session=session)
 
     return user

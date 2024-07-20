@@ -15,6 +15,6 @@ class CategoryAdmin(ModelView, model=Category):
 
     column_labels = {
         Category.name: "Название",
-        Category.image: "Изображения",
+        Category.image: "Изображение",
         Category.products: "Товары",
     }

@@ -19,5 +19,5 @@ class User(Base):
     avatar: Mapped[str] = mapped_column(String(300), nullable=True)
     registered_at: Mapped[str] = mapped_column(TIMESTAMP, default=datetime.utcnow)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
-    is_superuser: Mapped[bool] = mapped_column(Boolean, default=False)
     is_verified: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_superuser: Mapped[bool] = mapped_column(Boolean, default=False)

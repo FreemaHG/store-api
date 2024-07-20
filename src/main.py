@@ -2,18 +2,21 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from sqladmin import Admin
 
+from src.admin.auth import AdminAuth
 from src.admin.models.category import CategoryAdmin
 from src.admin.models.product import ProductAdmin
 from src.admin.models.user import Userdmin
 from src.auth.exceptions import UnauthorizedException, unauthorized_exception_handler, SignatureExpiredException, \
     signature_expired_exception_handler
 from src.database import engine
-from src.config import FRONTAGE_URL, DEBUG
+from src.config import FRONTAGE_URL, DEBUG, SECRET_KEY
 from src.urls import register_routers
 
 
 app = FastAPI(title='store', debug=DEBUG)
-admin = Admin(app, engine)
+
+authentication_backend = AdminAuth(secret_key=SECRET_KEY)
+admin = Admin(app=app, engine=engine, authentication_backend=authentication_backend)
 
 # Регистрация роутеров
 register_routers(app)

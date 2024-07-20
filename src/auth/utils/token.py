@@ -34,7 +34,7 @@ def get_token(request: Request) -> str:
     :param request: объект запроса
     :return: токен
     """
-    access_token = request.cookies.get('users_access_token')
+    access_token = request.cookies.get('access_token')
 
     if not access_token:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Токен не найден')

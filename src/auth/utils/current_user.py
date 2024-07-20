@@ -61,15 +61,3 @@ async def get_current_active_user(current_user: Annotated[User, Depends(get_curr
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Пользователь не активен")
 
     return current_user
-
-
-async def get_current_admin_user(current_user: Annotated[User, Depends(get_current_active_user)]):
-    """
-    Возврат текущего пользователя-админа
-    :param current_user: текущий пользователь
-    """
-
-    if current_user.is_superuser is False:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail='Недостаточно прав!')
-
-    return current_user

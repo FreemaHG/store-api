@@ -10,7 +10,7 @@ class ProductAdmin(ModelView, model=Product):
     icon = "fa-automobile"  # Иконка слева от названия
 
     column_list = [
-        Product.id, "category.name", Product.title, Product.description, Product.price, Product.images
+        Product.id, "category.name", Product.title, Product.description, Product.price
     ]
     column_searchable_list = [Product.title]
     column_sortable_list = [Product.id, Product.title, Product.price, Product.category_id,]
@@ -26,11 +26,9 @@ class ProductAdmin(ModelView, model=Product):
 
     # Наименования столбцов
     column_labels = {
-        Product.title: "Название",
+        Product.title: "Товар",
         Product.description: "Описание",
         Product.price: "Цена, $",
         Product.category_id: "id категории",
-        Product.images: "Изображения",
-        "category": "Категория",
         "category.name": "Категория",
     }
