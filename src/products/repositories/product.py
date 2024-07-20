@@ -4,7 +4,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
 
-from src.posts.models.product import Product
+from src.products.models.product import Product
 
 
 class ProductRepository:

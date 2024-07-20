@@ -5,10 +5,10 @@ from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_async_session
-from src.posts.schemas.product import ProductSchema
+from src.products.schemas.product import ProductSchema
 from src.router import BaseRouter
 from src.schemas import ResponseSchema
-from src.posts.services.product import ProductService
+from src.products.services.product import ProductService
 
 
 router = BaseRouter(tags=['Товары'])

@@ -17,7 +17,6 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(length=320), unique=True, index=True, nullable=False)
     password: Mapped[str] = mapped_column(String(length=1024), nullable=False)
     avatar: Mapped[str] = mapped_column(String(300), nullable=True)
-    # TODO Почему время регистрации на 3 часа меньше?!
     registered_at: Mapped[str] = mapped_column(TIMESTAMP, default=datetime.utcnow)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
     is_superuser: Mapped[bool] = mapped_column(Boolean, default=False)

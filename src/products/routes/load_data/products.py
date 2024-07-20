@@ -3,10 +3,10 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_async_session
-from src.posts.models.category import Category
-from src.posts.models.image import Image
-from src.posts.models.product import Product
-from src.posts.schemas.category import ResponseSchema
+from src.products.models.category import Category
+from src.products.models.image import Image
+from src.products.models.product import Product
+from src.products.schemas.category import ResponseSchema
 from src.router import BaseRouter
 
 

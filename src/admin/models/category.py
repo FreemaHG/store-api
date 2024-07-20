@@ -1,6 +1,6 @@
 from sqladmin import ModelView
 
-from src.posts.models.category import Category
+from src.products.models.category import Category
 
 
 class CategoryAdmin(ModelView, model=Category):

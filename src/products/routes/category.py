@@ -2,8 +2,8 @@ from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.database import get_async_session
-from src.posts.schemas.category import CategorySchema
-from src.posts.services.category import CategoryService
+from src.products.schemas.category import CategorySchema
+from src.products.services.category import CategoryService
 from src.router import BaseRouter
 
 

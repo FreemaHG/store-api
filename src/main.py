@@ -2,9 +2,11 @@ from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 from sqladmin import Admin
 
-from src.admin.category import CategoryAdmin
-from src.admin.product import ProductAdmin
-from src.admin.user import Userdmin
+from src.admin.models.category import CategoryAdmin
+from src.admin.models.product import ProductAdmin
+from src.admin.models.user import Userdmin
+from src.auth.exceptions import UnauthorizedException, unauthorized_exception_handler, SignatureExpiredException, \
+    signature_expired_exception_handler
 from src.database import engine
 from src.config import FRONTAGE_URL, DEBUG
 from src.urls import register_routers
@@ -32,3 +34,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Регистрация кастомных исключений
+app.add_exception_handler(UnauthorizedException, unauthorized_exception_handler)
+app.add_exception_handler(SignatureExpiredException, signature_expired_exception_handler)

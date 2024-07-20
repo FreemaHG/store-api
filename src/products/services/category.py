@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.posts.models.category import Category
-from src.posts.repositories.caterory import CategoryListRepository
+from src.products.models.category import Category
+from src.products.repositories.caterory import CategoryListRepository
 
 
 class CategoryService:
