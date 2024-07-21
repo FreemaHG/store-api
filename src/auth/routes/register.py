@@ -22,7 +22,6 @@ router = BaseRouter(tags=['Регистрация и авторизация'])
         201: {'model': UserOutSchema},
         404: {'model': ResponseSchema},
     },
-    status_code=201,
 )
 async def register_user(
         user_data: UserCreateSchema,

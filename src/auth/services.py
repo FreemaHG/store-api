@@ -1,5 +1,4 @@
 from datetime import timedelta
-from http import HTTPStatus
 
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -31,7 +30,7 @@ class AuthService:
 
         if user:
             raise HTTPException(
-                status_code=HTTPStatus.BAD_REQUEST,
+                status_code=status.BAD_REQUEST,
                 detail='Пользователь с таким логином уже зарегистрирован'
             )
 

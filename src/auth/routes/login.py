@@ -34,7 +34,10 @@ async def login(
         password=login_data.password,
         session=session
     )
-    response.set_cookie(key="access_token", value=access_token, httponly=True)
+    # httponly=True - запретить доступ к кукам через JS-код
+    # используется, если в куках хранятся важные данные
+    # response.set_cookie(key="access_token", value=access_token, httponly=True)
+    response.set_cookie(key="access_token", value=access_token)
 
     return Token(access_token=access_token, token_type="bearer")
 

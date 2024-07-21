@@ -1,4 +1,4 @@
-from sqlalchemy import select, insert
+from sqlalchemy import select, insert, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.auth.schemas.auth import UserCreateSchema
@@ -44,3 +44,21 @@ class UserRepository:
         user = await session.execute(query)
 
         return user.scalar_one_or_none()
+
+    @classmethod
+    async def update(cls, user_id: int, data: UserCreateSchema, session: AsyncSession) -> User | None:
+        """
+        Обновление данных пользователя
+        :param user_id: id пользователя
+        :param data: новые данные
+        :param session: объект асинхронной сессии
+        :return: обновленный объект пользователя
+        """
+
+        query = update(User).where(User.id == user_id).values(data.model_dump(exclude_unset=True)).returning(User)
+        result = await session.execute(query)
+        await session.commit()
+
+        updated_user = result.scalar()
+
+        return updated_user
