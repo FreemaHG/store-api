@@ -1,4 +1,4 @@
-import random
+from typing import Optional
 
 from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -23,13 +23,16 @@ router = BaseRouter(tags=['Товары'])
     },
 )
 async def get_products(
+    title: Optional[str] = None,
     session: AsyncSession = Depends(get_async_session),
 ):
     """
     Возврат товаров
     """
-    products_list = await ProductService.get_list(session=session)
-    random.shuffle(products_list)  # Перемешиваем товары
+    if title:
+        products_list = await ProductService.get_filter_by_title(title=title, session=session)
+    else:
+        products_list = await ProductService.get_list(session=session)
 
     return products_list
 

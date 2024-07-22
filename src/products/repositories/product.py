@@ -20,9 +20,7 @@ class ProductRepository:
         :param session: объект асинхронной сессии
         :return: объект товара | None
         """
-        query = select(Product)\
-            .options(joinedload(Product.images))\
-            .options(joinedload(Product.category))\
+        query = select(Product).options(joinedload(Product.images)).options(joinedload(Product.category))\
             .where(Product.id == product_id)
 
         product = await session.execute(query)
@@ -43,15 +41,33 @@ class ProductRepository:
         return list(products)
 
     @classmethod
-    async def get_filter_list(cls, category_id: int, session: AsyncSession) -> List[Product]:
+    async def get_filter_by_category(cls, category_id: int, session: AsyncSession) -> List[Product]:
         """
         Возврат товаров определенной категории
         :param category_id: идентификатор категории
         :param session: объект асинхронной сессии
         :return: список с товарами
         """
-        query = select(Product).where(Product.category_id == category_id)
+        query = select(Product).options(joinedload(Product.images)).options(joinedload(Product.category))\
+            .where(Product.category_id == category_id)
+
         res = await session.execute(query)
-        products = res.scalars().all()
+        products = res.scalars().unique()
+
+        return list(products)
+
+    @classmethod
+    async def get_filter_by_title(cls, title: str, session: AsyncSession) -> List[Product]:
+        """
+        Возврат товаров определенной категории
+        :param title: название товара
+        :param session: объект асинхронной сессии
+        :return: список с товарами
+        """
+        query = select(Product).options(joinedload(Product.images)).options(joinedload(Product.category))\
+            .where(Product.title.ilike(f'%{title}%'))
+
+        res = await session.execute(query)
+        products = res.scalars().unique()
 
         return list(products)
