@@ -11,14 +11,14 @@ from src.router import BaseRouter
 from src.schemas import ResponseSchema
 from src.users.models import User
 from src.auth.utils.current_user import get_current_active_user
-from src.users.repositories import UserRepository
 from src.users.schemas import UserOutSchema
 from src.users.services import UserServices
+
 
 router = BaseRouter(tags=['Пользователи'])
 
 @router.get(
-    "/users/me/",
+    "/users/me",
     name="Данные пользователя",
     description="Возврат данных пользователя",
     response_model=Union[UserOutSchema, ResponseSchema],
@@ -37,7 +37,7 @@ async def read_users_me(current_user: Annotated[User, Depends(get_current_active
 
 
 @router.put(
-    '/users/{user_id}/',
+    '/users/{user_id}',
     name="Обновление пользователя",
     description="Обновление данных пользователя",
     response_model=Union[UserOutSchema, ResponseSchema],

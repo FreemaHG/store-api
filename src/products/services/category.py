@@ -17,5 +17,6 @@ class CategoryService:
         :return: список с категориями
         """
         categories = await CategoryListRepository.get_list(session=session)
+        # TODO Добавить кэширование
 
         return categories

@@ -12,26 +12,32 @@ class ProductService:
     """
 
     @classmethod
-    async def get_list(cls, session: AsyncSession) -> list[Product] | None:
+    async def get_list(
+            cls,
+            category_id: int,
+            session: AsyncSession,
+            title: str = None,
+            price_min: float = None,
+            price_max: float = None,
+    ) -> list[Product] | None:
         """
-        Возврат списка товаров
-        :param session: объект асинхронной сессии
-        :return: список с товарами
-        """
-        products = await ProductRepository.get_list(session=session)
-        random.shuffle(products)  # Перемешиваем товары
-
-        return products
-
-    @classmethod
-    async def get_filter_by_title(cls, title: str, session: AsyncSession) -> list[Product] | None:
-        """
-        Возврат списка товаров
+        Возврат отфильтрованного списка товаров
+        :param category_id: идентификатор категории
         :param title: название товара
+        :param price_min: минимальная цена
+        :param price_max: максимальная цена
         :param session: объект асинхронной сессии
         :return: список с товарами
         """
-        filtered_products = await ProductRepository.get_filter_by_title(title=title, session=session)
+
+        filtered_products = await ProductRepository.get_list(
+            category_id=category_id,
+            title=title,
+            price_min=price_min,
+            price_max=price_max,
+            session=session
+        )
+        # TODO Добавить кэширование
 
         return filtered_products
 
@@ -44,5 +50,6 @@ class ProductService:
         :return: объект товара
         """
         post = await ProductRepository.get(product_id=product_id, session=session)
+        # TODO Добавить кэширование
 
         return post

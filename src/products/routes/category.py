@@ -10,7 +10,7 @@ from src.router import BaseRouter
 router = BaseRouter(tags=['Категории'])
 
 @router.get(
-    '/categories/',
+    '/categories',
     name="Возврат категорий",
     description="Возврат категорий",
     response_model=list[CategorySchema],

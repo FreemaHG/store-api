@@ -1,5 +1,6 @@
 from typing import List
 
+from loguru import logger
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import joinedload
@@ -28,44 +29,36 @@ class ProductRepository:
         return product.unique().scalar_one_or_none()
 
     @classmethod
-    async def get_list(cls, session: AsyncSession) -> List[Product]:
+    async def get_list(
+            cls,
+            category_id: int,
+            session: AsyncSession,
+            title: str = None,
+            price_min: float = None,
+            price_max: float = None,
+    ) -> List[Product]:
         """
-        Возврат всех товаров
+        Фильтрация и возврат товаров
+        :param category_id: идентификатор категории
+        :param title: название товара
+        :param price_min: минимальная цена
+        :param price_max: максимальная цена
         :param session: объект асинхронной сессии
-        :return: список с товарами
+        :return: список с отфильтрованными товарами
         """
         query = select(Product).options(joinedload(Product.images)).options(joinedload(Product.category))
-        res = await session.execute(query)
-        products = res.scalars().unique()
 
-        return list(products)
+        if category_id:
+            query = query.where(Product.category_id == category_id)
 
-    @classmethod
-    async def get_filter_by_category(cls, category_id: int, session: AsyncSession) -> List[Product]:
-        """
-        Возврат товаров определенной категории
-        :param category_id: идентификатор категории
-        :param session: объект асинхронной сессии
-        :return: список с товарами
-        """
-        query = select(Product).options(joinedload(Product.images)).options(joinedload(Product.category))\
-            .where(Product.category_id == category_id)
+        if title:
+            query = query.where(Product.title.ilike(f'%{title}%'))
 
-        res = await session.execute(query)
-        products = res.scalars().unique()
+        if price_min:
+            query = query.where(Product.price >= price_min)
 
-        return list(products)
-
-    @classmethod
-    async def get_filter_by_title(cls, title: str, session: AsyncSession) -> List[Product]:
-        """
-        Возврат товаров определенной категории
-        :param title: название товара
-        :param session: объект асинхронной сессии
-        :return: список с товарами
-        """
-        query = select(Product).options(joinedload(Product.images)).options(joinedload(Product.category))\
-            .where(Product.title.ilike(f'%{title}%'))
+        if price_max:
+            query = query.where(Product.price <= price_max)
 
         res = await session.execute(query)
         products = res.scalars().unique()

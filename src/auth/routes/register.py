@@ -14,7 +14,7 @@ from src.auth.services import AuthService
 router = BaseRouter(tags=['Регистрация и авторизация'])
 
 @router.post(
-    "/auth/register/",
+    "/auth/register",
     name="Регистрация",
     description="Регистрация и возврат данных пользователя",
     response_model=Union[UserOutSchema, ResponseSchema],

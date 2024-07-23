@@ -12,7 +12,7 @@ from src.router import BaseRouter
 router = BaseRouter(tags=['Регистрация и авторизация'])
 
 @router.post(
-    "/auth/login/",
+    "/auth/login",
     name="Авторизация",
     description="Авторизация пользователя и возврат токена",
     response_model=Token,
@@ -43,7 +43,7 @@ async def login(
 
 
 @router.post(
-    "/auth/logout/",
+    "/auth/logout",
     name="Выход",
     description="Выход пользователя из системы",
 )
