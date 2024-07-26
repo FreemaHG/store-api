@@ -11,6 +11,7 @@ class ProductService:
     Вывод товаров
     """
 
+    # TODO Не используется!!!
     @classmethod
     async def get_list(
             cls,

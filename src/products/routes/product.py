@@ -1,10 +1,11 @@
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette import status
 
 from src.database import get_async_session
+from src.products.repositories.product import ProductRepository
 from src.products.schemas.product import ProductSchema
 from src.router import BaseRouter
 from src.schemas import ResponseSchema
@@ -17,9 +18,9 @@ router = BaseRouter(tags=['Товары'])
     '/products',
     name="Возврат товаров",
     description="Возврат товаров с возможностью фильтрации по id категории, названию, минимальной и максимальной цене товара",
-    response_model=list[ProductSchema],
+    response_model=List[ProductSchema],
     responses={
-        200: {'model': list[ProductSchema]}
+        200: {'model': List[ProductSchema]}
     },
 )
 async def get_products(
@@ -27,21 +28,25 @@ async def get_products(
     title: Optional[str] = None,
     price_min: Optional[float] = None,
     price_max: Optional[float] = None,
+    limit: int = 100,
+    offset: int = 0,
     session: AsyncSession = Depends(get_async_session),
 ):
     """
     Возврат товаров
     """
 
-    products_list = await ProductService.get_list(
+    products = await ProductRepository.get_list(
         category_id=categoryId,
         title=title,
         price_min=price_min,
         price_max=price_max,
-        session=session,
+        limit=limit,
+        offset=offset,
+        session=session
     )
 
-    return products_list
+    return products
 
 
 @router.get(
