@@ -1,12 +1,14 @@
-## Запуск сервера
+## Локальный запуск сервера
 ```
 uvicorn src.main:app --reload 
 ```
 
-## Сборка контейнеров
+## Сборка и запуск контейнеров
 ```
-docker compose up -d
+docker compose up -d --build
 ```
+
+Фронт - https://github.com/FreemaHG/store-client.git
 
 ## Генерация ключа для подписи токенов JWT
 ```
