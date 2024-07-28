@@ -2,12 +2,12 @@ version: "3"
 
 services:
 
-    backend:
+    store-api:
       build:
         context: .
       env_file:
         - .env.prod
-      container_name: backend
+      container_name: store-api
       restart: on-failure
       expose:
         - 8000
